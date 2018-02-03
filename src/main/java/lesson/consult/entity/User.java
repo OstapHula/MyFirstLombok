@@ -1,9 +1,14 @@
 package lesson.consult.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -26,6 +31,11 @@ public class User extends BaseEntity{
 	@Enumerated(EnumType.ORDINAL)
 	private Gender gender;
 
+	@OneToMany(mappedBy = "user", cascade = {
+			CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+	})
+	private List<UserOrder> orders = new ArrayList<>();
+	
 	public User(String first_name, String last_name, Gender gender) {
 		this.first_name = first_name;
 		this.last_name = last_name;

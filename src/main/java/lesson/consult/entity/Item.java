@@ -2,6 +2,7 @@ package lesson.consult.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class Item extends BaseEntity {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "description", columnDefinition = "DEMICAL(6,2)")
+	@Column(name = "description", columnDefinition = "DECIMAL(6,2)")
 	private String description;
 	
 	@Column(name = "price")
@@ -36,8 +37,11 @@ public class Item extends BaseEntity {
 	
 	@Column(name = "amount")
 	private int amount;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+			})
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
